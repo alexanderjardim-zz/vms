@@ -1,4 +1,4 @@
 vms
 ===
 
-My Virtualboxes repositry
+My Virtualboxes repository
