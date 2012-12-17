@@ -1,42 +1,54 @@
-var http = require("http");
-var url  = require("url"); 
-var fs   = require("fs");
+var http       = require("http");
+var url        = require("url"); 
+var fs         = require("fs");
+var ctl        = require("./controller.js")
+var serverPort = 3000;
 
-var server = http.createServer( function(req, res) {
+function serve(res, status, type, content) {
+	res.writeHead(status, {"Content-type": type});
+	res.write(content+'');
+	res.end();	
+}
+
+function Controller(url, method) {
+	var parameters = url.pathname.substring(1,url.pathname.length).split("/");
+	this.model = parameters[0];
+	this.id = parameters[1];
+}
+
+http.createServer( function(req, res) {
 
 	var parsedUrl = url.parse(req.url);
 	var templateFile = "templates/"+parsedUrl.pathname;
-	var notFoundFile = "templates/404.html";
+	var notFoundFile = "templates/status/404.html";
+
+	console.log(new Controller(parsedUrl));
 
 	fs.exists(templateFile, function(exists) {
 
 		if (exists) {
-			fs.readFile( templateFile, "utf8", function(data, err) {
+			fs.readFile( templateFile, "utf8", function(err, data) {
 				if (err) {
-					res.writeHead(500, {"Content-type": "text/html"});
-					res.write(err+'');
-					res.end();
-				}
-				res.writeHead(200, {"Content-type": "text/html"});
-				res.write(data+'');			
-				res.end();
+					console.log(err);
+					serve(res, 500, "text/html", err);
+				} else {
+					serve(res, 200, "text/html", data);
+				}			
 			});			
 		} else {
-			fs.readFile( notFoundFile, "utf8", function(notFoundMsg, err) {
-				res.writeHead(404, {"Content-type": "text/html"});
+			fs.readFile( notFoundFile, "utf8", function(err, data) {
+				var content;
 				if (err) {
-					res.write("<html><head><title>404</title></head><body>404 - Página não encontrada!</body></html>", "utf8");
+					content = "<html><head><title>404</title></head><body>404 - P&aacute;gina n&atilde;o encontrada!<br />"+err+"</body></html>";
 				} else {
-					res.write(notFoundMsg+'');
+					content = data;
 				}
-				res.end();	
+				serve(res, 404, "text/html", content);
 			});		
 		}
 
 	});
 
+}).listen(serverPort);
 
-
-});
-
-server.listen(3000);
+console.log("Running server at port: "+serverPort);
