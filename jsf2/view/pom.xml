@@ -95,6 +95,12 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!--<dependency>
+        	<groupId>org.glassfish</groupId>
+        	<artifactId>bean-validator</artifactId>
+        	<version>3.0-JBoss-4.0.2_03</version>
+		</dependency>-->
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>

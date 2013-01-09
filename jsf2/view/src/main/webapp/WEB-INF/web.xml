@@ -22,7 +22,7 @@
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         version="2.5">
 
-    <description>MyProject web.xml</description>
+    <description>Meu Blog</description>
 
     <!-- JSF standard parameters -->
     <context-param>
@@ -82,7 +82,7 @@
         </description>
         <param-name>org.apache.myfaces.annotation.SCAN_PACKAGES</param-name>
         <param-value>b2w.promo</param-value>
-    </context-param>
+    </context-param>-->
 
     <!-- Faces Servlet -->
     <servlet>
@@ -99,7 +99,8 @@
 
     <!-- Welcome files -->
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <!--<welcome-file>index.html</welcome-file>-->
+        <welcome-file>blog.jsf</welcome-file>
     </welcome-file-list>
 
 </web-app>
