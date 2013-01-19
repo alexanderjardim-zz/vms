@@ -10,11 +10,11 @@ function serve(res, status, type, content) {
 	res.end();	
 }
 
-function Controller(url, method) {
+/*function Controller(url, method) {
 	var parameters = url.pathname.substring(1,url.pathname.length).split("/");
 	this.model = parameters[0];
 	this.id = parameters[1];
-}
+}*/
 
 http.createServer( function(req, res) {
 
@@ -22,7 +22,9 @@ http.createServer( function(req, res) {
 	var templateFile = "templates/"+parsedUrl.pathname;
 	var notFoundFile = "templates/status/404.html";
 
-	console.log(new Controller(parsedUrl));
+	//console.log(new Controller(parsedUrl));
+
+	ctl.getController(parsedUrl.pathname, req.method)
 
 	fs.exists(templateFile, function(exists) {
 
